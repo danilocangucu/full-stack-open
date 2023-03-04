@@ -79,10 +79,16 @@ const App = () => {
     value: positive
   }]
 
+  const allDataCopy = [...allData]
+
   const handleGood = () => {
     setGood(good + 1)
     setAll(allEvaluations + 1)
     setAverage(average + 1)
+    // allDataCopy[0] = {
+    //   ...allDataCopy[0],
+    //   value: good
+    // }
   }
 
   const handleNeutral = () => {

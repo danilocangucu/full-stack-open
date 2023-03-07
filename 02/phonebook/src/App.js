@@ -1,5 +1,55 @@
 import { useState } from 'react'
 
+const Persons = ({ newFilter, regexFilter, persons }) => {
+  let isFilterNow = (newFilter.length > 0)
+  return (
+    <>
+    {isFilterNow ?
+    (persons.map((person, i) => {
+      if (person.name.match(regexFilter)){
+        return (
+          <div key={i}>{person.name} {person.number}</div>
+        )
+      }
+    })) :
+    (persons.map((person, i) =>
+    <div key={i}>{person.name} {person.number}</div>
+    ))}
+    </>
+  )
+}
+
+const PersonForm = ({ onSubmit, value, onChange, inputNames }) => {
+  return (
+    <form onSubmit={onSubmit}>
+        {inputNames.map((text, i) => {
+          return (
+          <div key={i}>
+          {text}: <input 
+          value={value[i]}
+          onChange={onChange[i]}
+          />
+          </div>
+          )
+        }
+        )}
+        <div>
+          <button type="submit">add</button>
+        </div>
+    </form>
+  )
+}
+
+const Filter = ( handleFilter ) => {
+  return (
+    <>
+    filter shown with: <input
+    onChange={handleFilter.handleFilter}
+    />
+    </>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: "040-1234567" },
@@ -9,6 +59,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
+  const inputNames = ["name", "number"]
 
   let containsName = false
   let regexFilter = new RegExp(`${newFilter}`, 'gi');
@@ -53,37 +104,25 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      filter shown with: <input
-        onChange={handleFilter}
+      
+      <Filter 
+      handleFilter={handleFilter}
       />
+
       <h2>add a new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-            name: <input
-            value={newName}
-            onChange={handleNewName}/>
-        </div>
-        <div>
-            number: <input
-            value={newNumber}
-            onChange={handleNewNumber}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm
+      onSubmit={addPerson}
+      value={[newName, newNumber]}
+      onChange={[handleNewName, handleNewNumber]}
+      inputNames={inputNames}
+      />
       <h2>Numbers</h2>
-        {newFilter.length > 0 ? 
-        (persons.map((person, i) => {
-          if (person.name.match(regexFilter)){
-            return (
-              <div key={i}>{person.name} {person.number}</div>
-              )
-          }
-          return 
-        })) :
-        (persons.map((person, i) =>
-          <div key={i}>{person.name} {person.number}</div> ))}
+
+      <Persons
+      newFilter={newFilter}
+      regexFilter={regexFilter}
+      persons={persons}
+      />
     </div>
   )
 }

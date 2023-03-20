@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const Persons = ({ newFilter, regexFilter, persons }) => {
   let isFilterNow = (newFilter.length > 0)
@@ -51,11 +52,7 @@ const Filter = ( handleFilter ) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: "040-1234567" },
-    { name: 'Danilo Costa', number: "09348763" },
-    { name: 'Jan Korte', number: "9384867" }
-  ]) 
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setFilter] = useState('')
@@ -100,6 +97,16 @@ const App = () => {
   const handleFilter = (event) => {
     setFilter(event.target.value)
   }
+
+  const hook = () => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }
+  
+  useEffect(hook, [])
 
   return (
     <div>

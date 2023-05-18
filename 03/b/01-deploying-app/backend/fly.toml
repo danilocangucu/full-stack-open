@@ -1,0 +1,20 @@
+# fly.toml app configuration file generated for billowing-voice-2610 on 2023-05-18T11:18:01+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "billowing-voice-2610"
+primary_region = "arn"
+
+[env]
+  PORT = "8088"
+
+[experimental]
+  auto_rollback = true
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0

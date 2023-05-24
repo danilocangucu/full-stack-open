@@ -9,8 +9,8 @@
     "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build cp -r build ../../../../fso-phonebook/",
     "prepare:backend": "rsync -av --progress ../backend/ ../../../../fso-phonebook/ --exclude=node_modules && cd ../../../../fso-phonebook/ && npm install",
     "deploy:full": "cp -r build ../../fso-phonebook/ --exclude=node_modules",
-    "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
   },
   "author": "Danilo Cangucu",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "mongoose": "^7.2.0"
   },
   "devDependencies": {
+    "eslint": "^8.41.0",
     "nodemon": "^2.0.22"
   }
 }

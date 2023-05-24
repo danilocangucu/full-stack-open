@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+    "start-frontend": "cd frontend && npm start",
+    "start-backend": "cd backend && npm run dev",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "eslint": "^8.41.0"
+  }
+}

@@ -8,7 +8,6 @@
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build cp -r build ../../../../fso-phonebook/",
     "prepare:backend": "rsync -av --progress ../backend/ ../../../../fso-phonebook/ --exclude=node_modules && cd ../../../../fso-phonebook/ && npm install",
-    "deploy:full": "cp -r build ../../fso-phonebook/ --exclude=node_modules",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

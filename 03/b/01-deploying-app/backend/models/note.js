@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
-require('dotenv').config()
 
 mongoose.set('strictQuery', false)
 
 const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
+
+require('dotenv').config()
 
 mongoose.connect(url)
 	.then(_ => {
@@ -25,7 +26,7 @@ const noteSchema = new mongoose.Schema({
 })
 
 noteSchema.set('toJSON', {
-	transform: (document, returnedObject) => {
+	transform: (_, returnedObject) => {
 		returnedObject.id = returnedObject._id.toString()
 		delete returnedObject._id
 		delete returnedObject.__v

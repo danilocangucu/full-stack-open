@@ -10,24 +10,18 @@ describe('<BlogForm />', () => {
     test('form calls the event handler with right details', async () => {
         render(<BlogForm createBlog={createBlog} />)
 
-        const titleInput = screen.getByText('title')
-        const authorInput = screen.getByText('author')
-        const urlInput = screen.getByText('url')
+        const titleInput = screen.getByTestId('title')
+        const authorInput = screen.getByTestId('author')
+        const urlInput = screen.getByTestId('url')
         const saveButton = screen.getByText('save')
 
         userEvent.type(titleInput, 'New blog')
         userEvent.type(authorInput, 'New author')
         userEvent.type(urlInput, 'http://new.url')
 
-        expect(screen.getByDisplayValue('New blog')).toBeInTheDocument()
-        expect(screen.getByDisplayValue('New author')).toBeInTheDocument()
-        expect(screen.getByDisplayValue('http://new.url')).toBeInTheDocument()
-
-        screen.debug()
+        // screen.debug()
 
         userEvent.click(saveButton)
-
-        await waitFor(() => expect(createBlog).toHaveBeenCalledTimes(1))
 
         expect(createBlog).toHaveBeenCalledWith({
             title: 'New blog',

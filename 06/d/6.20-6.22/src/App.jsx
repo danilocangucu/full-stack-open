@@ -5,22 +5,21 @@ import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 
 const App = () => {
-/*   const queryClient = useQueryClient()
 
-  const updateAnecdoteMutation = useMutation(
-    updateAnecdote,
-    {
-      onMutate: (newData) => {
-        console.log(newData)
-      },
-      onError: (error) => {
-        console.log(error)
-      },
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({ queryKey: ['anecdotes'] });
-      },
-    }
-  ); */
+  const queryClient = useQueryClient()
+
+  const updateAnecdoteMutation = useMutation({
+    mutationFn: updateAnecdote,
+    onMutate: (newData) => {
+      console.log(newData)
+    },
+    onError: (error) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['anecdotes'] });
+    },
+  });
   
   const result = useQuery({
     queryKey: ['anecdotes'],
@@ -28,12 +27,8 @@ const App = () => {
     refetchOnWindowFocus: false
   })
 
-/*   const handleVote = (anecdote) => {
-    updateAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
-  } */
-
   const handleVote = (anecdote) => {
-    console.log(`voted ${anecdote.id}`, anecdote)
+    updateAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 })
   }
 
   if ( result.isLoading ) {

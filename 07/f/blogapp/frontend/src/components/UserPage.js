@@ -1,6 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { List, ListItem, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const UserPage = () => {
   const { id } = useParams();
@@ -10,15 +12,32 @@ const UserPage = () => {
   const userName =
     userBlogs.length > 0 ? userBlogs[0].user.name : "User not found";
 
+  const style = {
+    marginBottom: 2,
+    padding: 5,
+  };
+
   return (
     <div>
-      <h2>{userName}</h2>
-      <h3>added blogs</h3>
-      <ul>
-        {userBlogs.map((b, i) => (
-          <li key={i}>{b.title}</li>
-        ))}
-      </ul>
+      <Typography variant="h2" gutterBottom>
+        {userName}
+      </Typography>
+      <Typography variant="h5" gutterBottom>
+        added blogs
+      </Typography>
+      <div style={style}>
+        <Box spacing={2}>
+          <List>
+            {userBlogs.map((b) => (
+              <ListItem key={b.id}>
+                <Typography variant="body1" gutterBottom>
+                  <Link to={`/blogs/${b.id}`}>{b.title}</Link> by {b.author}
+                </Typography>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </div>
     </div>
   );
 };

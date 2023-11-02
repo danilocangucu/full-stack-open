@@ -1,18 +1,19 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import Typography from "@mui/material/Typography";
+
 const Blog = ({ blog }) => {
   const style = {
     marginBottom: 2,
     padding: 5,
-    borderStyle: "solid",
   };
 
   return (
     <div style={style} className="blog">
-      <Link to={`/blogs/${blog.id}`}>
-        {blog.title} {blog.author}
-      </Link>
+      <Typography variant="body1" gutterBottom>
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link> by {blog.author}
+      </Typography>
     </div>
   );
 };

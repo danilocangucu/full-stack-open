@@ -4,6 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateBlog } from "../reducers/blogReducer";
 import blogService from "../services/blogs";
 
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import { TextField } from "@mui/material";
+import { List, ListItem } from "@mui/material";
+
 const BlogPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -32,36 +39,66 @@ const BlogPage = () => {
 
   return (
     <div>
-      <h2>{blog.title}</h2>
-      <div>
-        <a href={blog.url}>{blog.url}</a>
-      </div>
-      <div>
-        {blog.likes} likes
-        <button onClick={() => like(blog)}>like</button>
-      </div>
-      <div>added by {blog.user.name}</div>
+      <br />
+      <Typography variant="h4" gutterBottom>
+        {blog.title}
+      </Typography>
+      <Typography variant="subtitle1" gutterBottom>
+        <div>
+          <a href={blog.url}>{blog.url}</a>
+        </div>
+        <div>
+          {blog.likes} likes
+          <Button
+            size="small"
+            variant="contained"
+            type="submit"
+            style={{ marginLeft: "10px" }}
+            onClick={() => like(blog)}
+          >
+            like
+          </Button>
+        </div>
+        <div>added by {blog.user.name}</div>
+        <br />
+      </Typography>
       {blog.comments.length > 0 && (
         <div>
-          <h3>comments</h3>
+          <Typography variant="h6">Comments</Typography>
+          <br />
           <form
             onSubmit={(e) => {
               e.preventDefault();
               comment(blog);
             }}
           >
-            <input
-              type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button type="submit">add comment</button>
+            <Grid container>
+              <Grid item>
+                <TextField
+                  size="small"
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                />
+              </Grid>
+              <Button
+                size="small"
+                variant="contained"
+                type="submit"
+                style={{ marginLeft: "10px" }}
+              >
+                add comment
+              </Button>
+            </Grid>
           </form>
-          <ul>
-            {blog.comments.map((c, i) => (
-              <li key={i}>{c}</li>
-            ))}
-          </ul>
+          <Box>
+            <List>
+              {blog.comments.map((c, i) => (
+                <ListItem key={i}>
+                  {i + 1}: {c}
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </div>
       )}
     </div>

@@ -1,6 +1,18 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+
+import Typography from "@mui/material/Typography";
+
 const UserBlogs = () => {
   const blogs = useSelector((state) => state.blog);
 
@@ -21,25 +33,29 @@ const UserBlogs = () => {
 
   return (
     <div>
-      <h2>Users</h2>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>blogs created</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userPostsArray.map((userPost, index) => (
-            <tr key={index}>
-              <td>
-                <Link to={`/users/${userPost.id}`}>{userPost.name}</Link>
-              </td>
-              <td>{userPost.posts}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Typography variant="h2" gutterBottom>
+        users
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Blogs Created</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {userPostsArray.map((userPost) => (
+              <TableRow key={userPost.id}>
+                <TableCell>
+                  <Link to={`/users/${userPost.id}`}>{userPost.name}</Link>
+                </TableCell>
+                <TableCell>{userPost.posts}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

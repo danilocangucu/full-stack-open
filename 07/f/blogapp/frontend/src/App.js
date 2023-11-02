@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 
@@ -14,26 +14,31 @@ import Togglable from "./components/Togglable";
 import UserBlogs from "./components/UserBlogs";
 import UserPage from "./components/UserPage";
 import BlogPage from "./components/BlogPage";
+import Navbar from "./components/NavBar";
 
 import {
   showNotification,
   clearNotification,
 } from "./reducers/notificationReducer";
 
-import {
-  addBlog,
-  removeBlog,
-  setBlogs,
-  updateBlog,
-} from "./reducers/blogReducer";
+import { addBlog, setBlogs } from "./reducers/blogReducer";
 
 import { removeUser, setUser } from "./reducers/userReducer";
+
+import Box from "@mui/material/Box";
+import { List, ListItem } from "@mui/material";
+import Typography from "@mui/material/Typography";
+
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const App = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog);
   const user = useSelector((state) => state.user);
-  const [info, setInfo] = useState({ message: null });
+  const info = { message: null };
 
   const blogFormRef = useRef();
 
@@ -42,7 +47,7 @@ const App = () => {
     if (user) {
       dispatch(setUser(user));
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     blogService.getAll().then((blogs) => dispatch(setBlogs(blogs)));
@@ -83,7 +88,9 @@ const App = () => {
   if (!user) {
     return (
       <div>
-        <h2>log in to application</h2>
+        <Typography variant="h2" gutterBottom>
+          Log in to application
+        </Typography>
         <Notification info={info} />
         <LoginForm login={login} />
       </div>
@@ -94,13 +101,9 @@ const App = () => {
 
   return (
     <div>
+      <Navbar user={user} logout={logout} />
       <div>
-        <h2>blogs</h2>
         <Notification info={info} />
-        <div>
-          {user.name} logged in
-          <button onClick={logout}>logout</button>
-        </div>
       </div>
       <Routes>
         <Route path="/users" element={<UserBlogs />} />
@@ -110,17 +113,24 @@ const App = () => {
           path="/"
           element={
             <div>
+              <Typography variant="h2" gutterBottom>
+                blogs
+              </Typography>
               <Togglable buttonLabel="new blog" ref={blogFormRef}>
                 <NewBlog createBlog={createBlog} />
               </Togglable>
-              <div>
-                {blogs
-                  .slice()
-                  .sort(byLikes)
-                  .map((blog) => (
-                    <Blog key={blog.id} blog={blog} />
-                  ))}
-              </div>
+              <Box spacing={2}>
+                <List>
+                  {blogs
+                    .slice()
+                    .sort(byLikes)
+                    .map((blog) => (
+                      <ListItem key={blog.id}>
+                        <Blog blog={blog} />
+                      </ListItem>
+                    ))}
+                </List>
+              </Box>
             </div>
           }
         />

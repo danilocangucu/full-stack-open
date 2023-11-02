@@ -29,4 +29,5 @@ const remove = async (id) => {
   await axios.delete(`${baseUrl}/${id}`, { headers });
 };
 
+// eslint-disable-next-line
 export default { getAll, create, update, remove };

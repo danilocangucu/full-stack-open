@@ -1,7 +1,7 @@
 import argsAreNumbers from "./utils/argsAreNumbers";
 import consoleLogError from "./utils/consoleError";
 
-interface ExerciseResults {
+export interface ExerciseResults {
   periodLength: number;
   trainingDays: number;
   success: boolean;
@@ -11,15 +11,15 @@ interface ExerciseResults {
   average: number;
 }
 
-interface exerciseValues {
+export interface ExerciseValues {
   exerciseHours: number[];
   target: number;
 }
 
-const parseExerciseArguments = (args: string[]): exerciseValues => {
+export const parseExerciseArguments = (args: string[]): ExerciseValues => {
   if (args.length < 4) throw new Error("Not enought arguments");
 
-  let parsedArguments: number[];
+  let parsedArguments: number[] = [];
 
   try {
     parsedArguments = argsAreNumbers(args.slice(2));
@@ -33,21 +33,21 @@ const parseExerciseArguments = (args: string[]): exerciseValues => {
   };
 };
 
-const calculateExercises = (
+export const calculateExercises = (
   exerciseHours: number[],
   target: number
 ): ExerciseResults => {
-  let periodLength = exerciseHours.length;
-  let trainingDaysArray = exerciseHours.filter((hours) => hours > 0);
-  let trainingDays = trainingDaysArray.length;
-  let trainingDaysSum = trainingDaysArray.reduce(
+  const periodLength = exerciseHours.length;
+  const trainingDaysArray = exerciseHours.filter((hours) => hours > 0);
+  const trainingDays = trainingDaysArray.length;
+  const trainingDaysSum = trainingDaysArray.reduce(
     (acc, hours) => acc + hours,
     0
   );
-  let average = trainingDaysSum / periodLength;
-  let success = average >= target;
-  let rating = Math.round(average);
-  let ratingDescription: string;
+  const average = trainingDaysSum / periodLength;
+  const success = average >= target;
+  const rating = Math.round(average);
+  let ratingDescription: string = "Default description";
 
   if (rating < 1) ratingDescription = "Not enough...";
   if (rating >= 1 && rating <= 2)
@@ -65,9 +65,9 @@ const calculateExercises = (
   };
 };
 
-try {
-  const { exerciseHours, target } = parseExerciseArguments(process.argv);
-  console.log(calculateExercises(exerciseHours, target));
-} catch (error: unknown) {
-  consoleLogError(error);
-}
+// try {
+//   const { exerciseHours, target } = parseExerciseArguments(process.argv);
+//   console.log(calculateExercises(exerciseHours, target));
+// } catch (error: unknown) {
+//   consoleLogError(error);
+// }

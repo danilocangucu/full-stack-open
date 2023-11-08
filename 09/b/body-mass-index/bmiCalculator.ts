@@ -6,8 +6,8 @@ interface BMIValues {
 export const calculateBmi = (height: number, weight: number): string => {
   if (!(height > 0))
     throw new Error(`Can't calculate BMI with height 0 or negative`);
-  let heightInMeters = height / 100;
-  let bmi = weight / Math.pow(heightInMeters, 2);
+  const heightInMeters = height / 100;
+  const bmi = weight / Math.pow(heightInMeters, 2);
 
   if (bmi < 18.5) return "Underweight";
   if (bmi >= 18.5 && bmi < 24.9) return "Normal (healthy weight)";

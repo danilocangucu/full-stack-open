@@ -1,51 +1,59 @@
-import { useState } from "react";
-import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
-import axios from 'axios';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// import { useState } from "react";
+// import { Box, Table, Button, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
+import { Box, Table, TableHead, Typography, TableCell, TableRow, TableBody } from '@mui/material';
 
-import { PatientFormValues, Patient } from "../../types";
-import AddPatientModal from "../AddPatientModal";
+// import axios from 'axios';
+
+import { Patient } from "../../types";
+// import { PatientFormValues, Patient } from "../../types";
+
+// import AddPatientModal from "../AddPatientModal";
 
 import HealthRatingBar from "../HealthRatingBar";
 
-import patientService from "../../services/patients";
+// import patientService from "../../services/patients";
+import React from "react";
 
 interface Props {
   patients : Patient[]
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
 }
 
-const PatientListPage = ({ patients, setPatients } : Props ) => {
+// const PatientListPage = ({ patients, setPatients } : Props ) => {
+  const PatientListPage = ({ patients } : Props ) => {
 
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
 
-  const openModal = (): void => setModalOpen(true);
+  // const [modalOpen, setModalOpen] = useState<boolean>(false);
+  // const [error, setError] = useState<string>();
 
-  const closeModal = (): void => {
-    setModalOpen(false);
-    setError(undefined);
-  };
+  // const openModal = (): void => setModalOpen(true);
 
-  const submitNewPatient = async (values: PatientFormValues) => {
-    try {
-      const patient = await patientService.create(values);
-      setPatients(patients.concat(patient));
-      setModalOpen(false);
-    } catch (e: unknown) {
-      if (axios.isAxiosError(e)) {
-        if (e?.response?.data && typeof e?.response?.data === "string") {
-          const message = e.response.data.replace('Something went wrong. Error: ', '');
-          console.error(message);
-          setError(message);
-        } else {
-          setError("Unrecognized axios error");
-        }
-      } else {
-        console.error("Unknown error", e);
-        setError("Unknown error");
-      }
-    }
-  };
+  // const closeModal = (): void => {
+  //   setModalOpen(false);
+  //   setError(undefined);
+  // };
+
+  // const submitNewPatient = async (values: PatientFormValues) => {
+  //   try {
+  //     const patient = await patientService.create(values);
+  //     setPatients(patients.concat(patient));
+  //     setModalOpen(false);
+  //   } catch (e: unknown) {
+  //     if (axios.isAxiosError(e)) {
+  //       if (e?.response?.data && typeof e?.response?.data === "string") {
+  //         const message = e.response.data.replace('Something went wrong. Error: ', '');
+  //         console.error(message);
+  //         setError(message);
+  //       } else {
+  //         setError("Unrecognized axios error");
+  //       }
+  //     } else {
+  //       console.error("Unknown error", e);
+  //       setError("Unknown error");
+  //     }
+  //   }
+  // };
 
   return (
     <div className="App">
@@ -76,15 +84,15 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
           ))}
         </TableBody>
       </Table>
-      <AddPatientModal
+      {/* <AddPatientModal
         modalOpen={modalOpen}
         onSubmit={submitNewPatient}
         error={error}
         onClose={closeModal}
-      />
-      <Button variant="contained" onClick={() => openModal()}>
+      /> */}
+      {/* <Button variant="contained" onClick={() => openModal()}>
         Add New Patient
-      </Button>
+      </Button> */}
     </div>
   );
 };

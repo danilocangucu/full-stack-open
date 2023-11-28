@@ -8,6 +8,7 @@ import { Patient } from "./types";
 
 import patientService from "./services/patients";
 import PatientListPage from "./components/PatientListPage";
+import React from "react";
 
 const App = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -16,7 +17,7 @@ const App = () => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
     const fetchPatientList = async () => {
-      const patients = await patientService.getAll();
+      const patients = await patientService.getNonSensitivePatients();
       setPatients(patients);
     };
     void fetchPatientList();

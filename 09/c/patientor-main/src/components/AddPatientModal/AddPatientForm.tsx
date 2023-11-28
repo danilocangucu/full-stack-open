@@ -2,11 +2,14 @@ import { useState, SyntheticEvent } from "react";
 
 import {  TextField, InputLabel, MenuItem, Select, Grid, Button, SelectChangeEvent } from '@mui/material';
 
-import { PatientFormValues, Gender } from "../../types";
+// import { PatientFormValues, Gender } from "../../types";
+import { Gender } from "../../types";
+import React from "react";
+
 
 interface Props {
   onCancel: () => void;
-  onSubmit: (values: PatientFormValues) => void;
+  // onSubmit: (values: PatientFormValues) => void;
 }
 
 interface GenderOption{
@@ -18,7 +21,8 @@ const genderOptions: GenderOption[] = Object.values(Gender).map(v => ({
   value: v, label: v.toString()
 }));
 
-const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
+// const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
+const AddPatientForm = ({ onCancel }: Props) => {
   const [name, setName] = useState('');
   const [occupation, setOccupation] = useState('');
   const [ssn, setSsn] = useState('');
@@ -38,13 +42,13 @@ const AddPatientForm = ({ onCancel, onSubmit }: Props) => {
 
   const addPatient = (event: SyntheticEvent) => {
     event.preventDefault();
-    onSubmit({
-      name,
-      occupation,
-      ssn,
-      dateOfBirth,
-      gender
-    });
+    // onSubmit({
+    //   name,
+    //   occupation,
+    //   ssn,
+    //   dateOfBirth,
+    //   gender
+    // });
   };
 
   return (

@@ -7,4 +7,10 @@ router.get("/", (_req, res) => {
   res.send(patientsService.getNonSensitivePatients());
 });
 
+router.post("/", (req, res) => {
+  console.log(req.body);
+  const addedPatient = patientsService.addNewPatient(req.body);
+  res.send(addedPatient);
+});
+
 export default router;

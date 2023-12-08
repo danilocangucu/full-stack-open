@@ -1,4 +1,4 @@
-import { NewPatient, Gender, Patient } from "./types";
+import { NewPatient, Gender, Patient, Entry } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
 const toNewPatient = (object: unknown): Patient => {
@@ -62,6 +62,18 @@ const parseDate = (date: unknown): string => {
 
 const isDate = (date: string): boolean => {
   return Boolean(Date.parse(date));
+};
+
+export const validatePatient = (patient: Patient) => {
+  for (const entry of patient.entries) {
+    if (
+      entry.type !== "HealthCheck" &&
+      entry.type !== "OccupationalHealthcare" &&
+      entry.type !== "Hospital"
+    ) {
+      throw new Error(`Invalid entry type: ${(entry as Entry).type}`);
+    }
+  }
 };
 
 export default toNewPatient;

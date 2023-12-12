@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import patientService from "../../services/patients";
 import diagnosisService from "../../services/diagnosis";
 import { Diagnosis, Patient } from "../../types";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import PatientEntries from "./PatientEntries";
 
 const PatientPage = () => {
     const { id } = useParams();
@@ -61,28 +61,15 @@ const PatientPage = () => {
             gender: {patient?.gender}<br />
             ssh: {patient?.ssn}<br />
             occupation: {patient?.occupation}
-            {patient?.entries && patient.entries.length > 0 && <h2>entries</h2>}
-            {patient?.entries.map(entry => (
-                <div key={entry.id}>
-                    {entry.date} <i>{entry.description}</i>
-                    {entry.diagnosisCodes && entry.diagnosisCodes?.length > 0 && (
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Diagnosis code(s)</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {entry.diagnosisCodes?.map((dC, i) => (
-                                    <TableRow key={i}>
-                                        <TableCell>{dC} {patientDiagnoses && patientDiagnoses[i]?.name}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                </div>
-            ))}
+            {patient?.entries && patient.entries.length > 0 && (
+                <>
+                    <h2>Entries</h2>
+                    <PatientEntries
+                        entries={patient.entries}
+                        diagnoses={patientDiagnoses?.filter((diagnosis): diagnosis is Diagnosis => !!diagnosis) || []}
+                    />
+                </>
+            )}
         </>
     );
 };

@@ -7,6 +7,7 @@ import {
   Patient,
   NewPatient,
   PatientFormValues,
+  Entry,
 } from "../types";
 
 const getNonSensitivePatients = (): NonSensitivePatient[] => {
@@ -29,9 +30,7 @@ const addNewPatient = (object: NewPatient): Patient => {
     id: uuidv4(),
     ...object,
   };
-  console.log(patientsData.length);
-  const len = patientsData.push(newPatient);
-  console.log(len);
+  patientsData.push(newPatient);
   return newPatient;
 };
 
@@ -59,6 +58,21 @@ const getPatient = async (id: string) => {
   }
 };
 
+const getErrorMessage = (error: unknown): string => {
+  let errorMessage = "Something went wrong.";
+  if (error instanceof Error) {
+    errorMessage += " Error: " + error.message;
+  } else {
+    errorMessage += " Error: " + String(error);
+  }
+  return errorMessage;
+};
+
+const addEntrytoPatient = (entry: Entry, id: string) => {
+  const patient = getByPatientId(id);
+  patient.entries.push(entry);
+};
+
 export default {
   getNonSensitivePatients,
   addNewPatient,
@@ -66,4 +80,6 @@ export default {
   getAll,
   create,
   getPatient,
+  getErrorMessage,
+  addEntrytoPatient,
 };

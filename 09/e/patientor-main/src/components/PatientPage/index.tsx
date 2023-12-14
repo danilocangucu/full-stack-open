@@ -2,14 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import patientService from "../../services/patients";
 import diagnosisService from "../../services/diagnosis";
-import { Diagnosis, Patient } from "../../types";
+import { Diagnosis, Entry, Patient } from "../../types";
 import PatientEntries from "./PatientEntries";
+import EntryForm from "./EntryForm";
+import { Button } from "@mui/material";
 
 const PatientPage = () => {
     const { id } = useParams();
+    const [showForm, setShowForm] = useState(false);
     const [patient, setPatient] = useState<Patient | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [diagnoses, setDiagnoses] = useState<Diagnosis[] | null>(null);
+
+    const addEntry = (entry: Entry) => {
+        if (patient) {
+            setPatient({ ...patient, entries: [...patient.entries, entry] });
+        }
+    };
 
     type FetchDataParams =
         | { type: 'patient'; service: (id: string) => Promise<Patient>; setter: (data: Patient) => void; id: string | undefined }
@@ -60,7 +69,13 @@ const PatientPage = () => {
             <h1>{patient?.name}</h1>
             gender: {patient?.gender}<br />
             ssh: {patient?.ssn}<br />
-            occupation: {patient?.occupation}
+            occupation: {patient?.occupation}<br /><br />
+            <Button onClick={() => setShowForm(!showForm)}>
+                {showForm ? "Hide Entry Form" : "Show Entry Form"}
+            </Button>
+            <div style={{ display: showForm ? "block" : "none" }}>
+                <EntryForm id={id} addEntry={addEntry} />
+            </div>
             {patient?.entries && patient.entries.length > 0 && (
                 <>
                     <h2>Entries</h2>

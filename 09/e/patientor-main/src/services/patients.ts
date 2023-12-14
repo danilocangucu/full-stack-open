@@ -73,6 +73,22 @@ const addEntrytoPatient = (entry: Entry, id: string) => {
   patient.entries.push(entry);
 };
 
+const postEntryToPatient = async (entry: Entry, id: string) => {
+  entry.id = uuidv4();
+  try {
+    const { data } = await axios.post<Entry>(
+      `${apiBaseUrl}/patients/${id}/entries`,
+      entry
+    );
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data);
+    }
+    throw new Error("Oops! An error occurred, sorry.");
+  }
+};
+
 export default {
   getNonSensitivePatients,
   addNewPatient,
@@ -82,4 +98,5 @@ export default {
   getPatient,
   getErrorMessage,
   addEntrytoPatient,
+  postEntryToPatient,
 };

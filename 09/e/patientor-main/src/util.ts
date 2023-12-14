@@ -221,6 +221,19 @@ function assertEntry(parsedObject: object): asserts parsedObject is Entry {
   throw new Error("Object from request is not an Entry");
 }
 
+export const emptyHospitalEntry: HospitalEntry = {
+  type: "Hospital",
+  description: "",
+  date: "",
+  specialist: "",
+  diagnosisCodes: [],
+  discharge: {
+    date: "",
+    criteria: "",
+  },
+  id: "",
+};
+
 const toNew = {
   patient: toNewPatient,
   entry: toNewEntry,

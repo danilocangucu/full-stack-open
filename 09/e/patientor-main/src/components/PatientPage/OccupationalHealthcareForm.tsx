@@ -11,8 +11,20 @@ const OccupationalHealthcareForm: React.FC<OccupationalHealthcareFormProps> = ({
     return (
         <>
             <TextField label="Employer Name" value={formData.employerName} onChange={e => setFormData({ ...formData, employerName: e.target.value })} />
-            <TextField type="date" label="Sick Leave Start Date" value={formData.sickLeave?.startDate} onChange={e => setFormData({ ...formData, sickLeave: { ...formData.sickLeave, startDate: e.target.value } })} />
-            <TextField type="date" label="Sick Leave End Date" value={formData.sickLeave?.endDate} onChange={e => setFormData({ ...formData, sickLeave: { ...formData.sickLeave, endDate: e.target.value } })} />
+            <TextField type="date" label="Sick Leave Start Date" value={formData.sickLeave?.startDate} onChange={e => setFormData({
+                ...formData, sickLeave: {
+                    ...formData.sickLeave,
+                    startDate: e.target.value,
+                    endDate: formData.sickLeave?.endDate || ''
+                }
+            })} />
+            <TextField type="date" label="Sick Leave End Date" value={formData.sickLeave?.endDate} onChange={e => setFormData({
+                ...formData, sickLeave: {
+                    ...formData.sickLeave,
+                    endDate: e.target.value,
+                    startDate: formData.sickLeave?.startDate || ''
+                }
+            })} />
         </>
     );
 };

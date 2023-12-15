@@ -8,6 +8,7 @@ import {
   OccupationalHealthcareEntry,
   HospitalEntry,
   HealthCheckRating,
+  BaseEntry,
 } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -232,6 +233,35 @@ export const emptyHospitalEntry: HospitalEntry = {
     criteria: "",
   },
   id: "",
+};
+
+export const emptyBaseEntry: BaseEntry = {
+  id: "",
+  description: "",
+  date: "",
+  specialist: "",
+};
+
+export const emptyHealthCheckEntry: HealthCheckEntry = {
+  type: "HealthCheck",
+  healthCheckRating: HealthCheckRating.CriticalRisk,
+  id: "",
+  description: "",
+  date: "",
+  specialist: "",
+};
+
+export const emptyOccupationalHealthcareEntry: OccupationalHealthcareEntry = {
+  type: "OccupationalHealthcare",
+  employerName: "",
+  id: "",
+  description: "",
+  date: "",
+  specialist: "",
+  sickLeave: {
+    startDate: "",
+    endDate: "",
+  },
 };
 
 const toNew = {

@@ -7,7 +7,7 @@ export type Entry =
 //   ? Omit<T, K>
 //   : never;
 
-interface BaseEntry {
+export interface BaseEntry {
   id: string;
   description: string;
   date: string;

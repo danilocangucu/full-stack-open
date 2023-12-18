@@ -3,15 +3,16 @@ import { Entry, BaseEntry, HospitalEntry, HealthCheckEntry, OccupationalHealthca
 import patientService from "../../services/patients";
 import Notification from "../Notification";
 import { emptyHospitalEntry, emptyBaseEntry, emptyHealthCheckEntry, emptyOccupationalHealthcareEntry } from "../../util";
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Chip } from "@mui/material";
 import HospitalForm from "./HospitalForm";
 import HealthCheckForm from "./HealthCheckForm";
 import OccupationalHealthcareForm from "./OccupationalHealthcareForm";
 
 const EntryForm = (
-    { id, addEntry }: {
+    { id, addEntry, diagnoses }: {
         id: string | undefined,
-        addEntry: (entry: Entry) => void
+        addEntry: (entry: Entry) => void,
+        diagnoses: string[]
     }
 ) => {
     const [baseEntryFormData, setBaseEntryFormData] =
@@ -87,9 +88,27 @@ const EntryForm = (
                         onChange={e => setBaseEntryFormData({ ...baseEntryFormData, date: e.target.value })} />
                     <TextField label="Specialist" value={baseEntryFormData.specialist}
                         onChange={e => setBaseEntryFormData({ ...baseEntryFormData, specialist: e.target.value })} />
-                    <TextField label="Diagnosis Codes"
-                        value={(baseEntryFormData.diagnosisCodes || []).join(',')}
-                        onChange={e => setBaseEntryFormData({ ...baseEntryFormData, diagnosisCodes: e.target.value.split(',') })} />
+                    <InputLabel>Diagnosis Codes</InputLabel>
+                    <Select
+                        multiple
+                        value={baseEntryFormData.diagnosisCodes || []}
+                        onChange={e => {
+                            setBaseEntryFormData({ ...baseEntryFormData, diagnosisCodes: e.target.value as string[] });
+                        }}
+                        renderValue={(selected) => (
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                {selected.map((value) => (
+                                    <Chip key={value} label={value} />
+                                ))}
+                            </Box>
+                        )}
+                    >
+                        {diagnoses && diagnoses.map((diagnosis) => (
+                            <MenuItem key={diagnosis} value={diagnosis}>
+                                {diagnosis}
+                            </MenuItem>
+                        ))}
+                    </Select>
                     <FormControl>
                         <InputLabel>Type</InputLabel>
                         <Select value={formType} onChange={e => setFormType(e.target.value)}>

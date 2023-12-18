@@ -58,6 +58,8 @@ const PatientPage = () => {
         .flatMap(entry => entry.diagnosisCodes)
         .map(diagnosisCode => diagnoses?.find(diagnosis => diagnosis.code === diagnosisCode));
 
+    const dataDiagnoses = diagnoses?.map(diagnosis => diagnosis.code);
+
     if (errorMessage) {
         return (
             <h1>{errorMessage}</h1>
@@ -74,7 +76,7 @@ const PatientPage = () => {
                 {showForm ? "Hide Entry Form" : "Show Entry Form"}
             </Button>
             <div style={{ display: showForm ? "block" : "none" }}>
-                <EntryForm id={id} addEntry={addEntry} />
+                <EntryForm id={id} addEntry={addEntry} diagnoses={dataDiagnoses!} />
             </div>
             {patient?.entries && patient.entries.length > 0 && (
                 <>
